@@ -14,7 +14,9 @@ $ActionSendStreamDriverMode 1
 $ActionSendStreamDriverAuthMode x509/name
 $ActionSendStreamDriverPermittedPeer *.loggly.com
 
-*.* @@logs-01.loggly.com:6514;LogglyFormat
+<% @app_names.each do |appname| -%>
+  if $programname == '<%= appname -%>' then @@logs-01.loggly.com:6514; LogglyFormat 
+<% end -%>
 
 <% else -%>
 
@@ -24,6 +26,9 @@ $ActionSendStreamDriverPermittedPeer *.loggly.com
 
 $template LogglyFormat,"<%%pri%>%protocol-version% %timestamp:::date-rfc3339% %HOSTNAME% %app-name% %procid% %msgid% [<%= @customer_token -%>@41058 <% @tags.each do |value| -%>tag=\"<%=value%>\" <% end -%>] %msg%\n"
 
-*.* @@logs-01.loggly.com:514; LogglyFormat
+<% @app_names.each do |appname| -%>
+  if $programname == '<%= appname -%>' then @@logs-01.loggly.com:514; LogglyFormat 
+<% end -%>
+
 <% end -%>
 #################END CONFIG FILE#########################

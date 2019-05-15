@@ -24,6 +24,9 @@
 # [*enable_tls*]
 #   Enables or disables TLS encryption for shipped events.
 #
+# [*app_names*]
+#   Allow-list of syslog appNames to forward logs for.
+#
 # === Examples
 #
 #  class { 'loggly::rsyslog':
@@ -36,9 +39,10 @@
 #
 class loggly::rsyslog (
   $customer_token,
-  $cert_path       = $loggly::_cert_path,
-  $enable_tls      = $loggly::enable_tls,
-  $tags            = $loggly::tags,
+  $cert_path            = $loggly::_cert_path,
+  $enable_tls           = $loggly::enable_tls,
+  $tags                 = $loggly::tags,
+  $app_names            = $loggly::app_names,
 ) inherits loggly {
 
   validate_string($customer_token)
