@@ -26,7 +26,7 @@ class loggly::params {
 
   $tags = []
 
-  $app_names = []
+  $app_names_to_exclude = []
 }
 
 # vim: syntax=puppet ft=puppet ts=2 sw=2 nowrap et

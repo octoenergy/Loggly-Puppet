@@ -24,8 +24,8 @@
 # [*enable_tls*]
 #   Enables or disables TLS encryption for shipped events.
 #
-# [*app_names*]
-#   Allow-list of syslog appNames to forward logs for.
+# [*app_names_to_exclude*]
+#   Deny-list of syslog appNames to NOT forward logs for.
 #
 # === Examples
 #
@@ -42,13 +42,14 @@ class loggly::rsyslog (
   $cert_path            = $loggly::_cert_path,
   $enable_tls           = $loggly::enable_tls,
   $tags                 = $loggly::tags,
-  $app_names            = $loggly::app_names,
+  $app_names_to_exclude = $loggly::app_names,
 ) inherits loggly {
 
   validate_string($customer_token)
   validate_absolute_path($cert_path)
   validate_bool($enable_tls)
   validate_array($tags)
+  validate_array($app_names_to_exclude)
 
   # Emit a configuration snippet that submits events to Loggly by default
   file { '/etc/rsyslog.d/22-loggly.conf':

@@ -21,9 +21,6 @@
 #   Directory to store the Loggly TLS certs in.  Normally this would be
 #   relative to $base_dir.
 #
-# [*app_names*]
-#   Allow-list of syslog appNames to forward logs for.
-#
 # === Authors
 #
 # Colin Moller <colin@unixarmy.com>
@@ -34,7 +31,6 @@ class loggly (
   $enable_tls = $loggly::params::enable_tls,
   $cert_path  = undef,
   $tags       = $loggly::params::tags,
-  $app_names  = $loggly::params::app_names,
 ) inherits loggly::params {
 
   $_cert_path = pick($cert_path, "${base_dir}/certs")
