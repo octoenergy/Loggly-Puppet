@@ -25,7 +25,6 @@ class loggly::params {
   }
 
   $tags = []
-
   $app_names_to_exclude = []
 }
 

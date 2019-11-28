@@ -31,6 +31,7 @@ class loggly (
   $enable_tls = $loggly::params::enable_tls,
   $cert_path  = undef,
   $tags       = $loggly::params::tags,
+  $app_names  = $loggly::params::app_names_to_exclude,
 ) inherits loggly::params {
 
   $_cert_path = pick($cert_path, "${base_dir}/certs")

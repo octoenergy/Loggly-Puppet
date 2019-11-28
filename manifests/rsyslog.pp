@@ -43,6 +43,7 @@ class loggly::rsyslog (
   $enable_tls           = $loggly::enable_tls,
   $tags                 = $loggly::tags,
   $app_names_to_exclude = $loggly::app_names,
+  $create_conf_file     = true
 ) inherits loggly {
 
   validate_string($customer_token)
@@ -52,13 +53,15 @@ class loggly::rsyslog (
   validate_array($app_names_to_exclude)
 
   # Emit a configuration snippet that submits events to Loggly by default
-  file { '/etc/rsyslog.d/22-loggly.conf':
-    ensure  => 'file',
-    owner   => 'root',
-    group   => 'root',
-    mode    => '0644',
-    content => template("${module_name}/rsyslog/22-loggly.conf.erb"),
-    notify  => Exec['restart_rsyslogd'],
+  if $create_conf_file == true {
+    file { '/etc/rsyslog.d/22-loggly.conf':
+      ensure  => 'file',
+      owner   => 'root',
+      group   => 'root',
+      mode    => '0644',
+      content => template("${module_name}/rsyslog/22-loggly.conf.erb"),
+      notify  => Exec['restart_rsyslogd'],
+    }
   }
 
   # TLS configuration requires an extra package to be installed
